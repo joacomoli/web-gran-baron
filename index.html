@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gran Barón — Curaduría textil. Importamos textiles exclusivos para marcas que diseñan con visión internacional.">
+  <title>Gran Barón | Curaduría Textil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="navbar" id="navbar" aria-label="Navegación principal">
+    <a href="#inicio" class="nav-logo">Gran Barón</a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu" aria-label="Abrir menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="nav-menu" id="navMenu" role="menubar">
+      <li role="none"><a href="#inicio" role="menuitem">Inicio</a></li>
+      <li role="none"><a href="#propuesta" role="menuitem">Propuesta</a></li>
+      <li role="none"><a href="#materia" role="menuitem">Materia</a></li>
+      <li role="none"><a href="#faq" role="menuitem">FAQ</a></li>
+      <li role="none"><a href="#contacto" role="menuitem">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- Canvas continuo: telas + gradientes + noise -->
+  <div class="canvas-bg" aria-hidden="true">
+    <div class="fabric-layer fabric-hero" style="background-image: url('assets/images/pexels-artempodrez-7232413.jpg')"></div>
+    <div class="fabric-layer fabric-mid" style="background-image: url('assets/images/pexels-marina-zasorina-7717488.jpg')"></div>
+    <div class="fabric-layer fabric-bottom" style="background-image: url('assets/images/pexels-eva-bronzini-7641151.jpg')"></div>
+    <div class="gradient-overlay"></div>
+    <div class="fabric-hover fabric-hover-1" style="background-image: url('assets/images/pexels-artempodrez-7232413.jpg')"></div>
+    <div class="fabric-hover fabric-hover-2" style="background-image: url('assets/images/pexels-marina-zasorina-7717488.jpg')"></div>
+    <div class="fabric-hover fabric-hover-3" style="background-image: url('assets/images/pexels-eva-bronzini-7641151.jpg')"></div>
+    <div class="fabric-hover fabric-hover-4" style="background-image: url('assets/images/pexels-mccutcheon-3731097.jpg')"></div>
+    <div class="noise-layer"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <main class="flow">
+    <!-- Hero: full bleed sobre tela -->
+    <header id="inicio" class="flow-block hero-block" aria-labelledby="hero-heading">
+      <div class="flow-inner hero-inner">
+        <h1 id="hero-heading" class="hero-title">Gran Barón</h1>
+        <p class="hero-phrase">Diseñar empieza en la materia.</p>
+        <p class="hero-tagline">Importamos textiles exclusivos desde China para marcas argentinas que quieren diseñar con visión internacional.</p>
+        <div class="hero-ctas">
+          <a href="#materia" class="btn btn-primary">Explorar colección</a>
+          <a href="#contacto" class="btn btn-secondary">Contactar</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Frase editorial flotante -->
+    <div id="propuesta" class="flow-block phrase-block">
+      <div class="flow-inner">
+        <p class="editorial-phrase">Curaduría textil.<br>Tendencia.<br>Exclusividad.</p>
+      </div>
+    </div>
+
+    <!-- Pilares: sin cards, texto flotante -->
+    <div class="flow-block pillars-block">
+      <div class="flow-inner pillars-inner">
+        <p class="pillar-label">Lo que nos define</p>
+        <div class="pillars-flow">
+          <div class="pillar" data-pillar="1">
+            <span class="pillar-num">01</span>
+            <h3>Radar de moda</h3>
+            <p>Sabemos lo que vuelve. Vemos Europa. Traemos el futuro.</p>
+          </div>
+          <div class="pillar" data-pillar="2">
+            <span class="pillar-num">02</span>
+            <h3>Materia prima de lujo</h3>
+            <p>Textura, caída, luz. Cada tela como pieza de colección.</p>
+          </div>
+          <div class="pillar" data-pillar="3">
+            <span class="pillar-num">03</span>
+            <h3>Dirección creativa</h3>
+            <p>Sabemos de confección, de usos reales. Ayudamos a producir mejor.</p>
+          </div>
+          <div class="pillar" data-pillar="4">
+            <span class="pillar-num">04</span>
+            <h3>Moda como cultura</h3>
+            <p>No somos proveedor. Somos institución creativa.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Materia: imágenes de telas + texto overlay -->
+    <div id="materia" class="flow-block materia-block">
+      <div class="materia-visual">
+        <div class="materia-img-wrap materia-img-1">
+          <img src="assets/images/pexels-mccutcheon-3731097.jpg" alt="Detalle de textura textil" loading="lazy">
+        </div>
+        <div class="materia-img-wrap materia-img-2">
+          <img src="assets/images/pexels-enginakyurt-1460890.jpg" alt="Tela premium en detalle" loading="lazy">
+        </div>
+        <div class="materia-img-wrap materia-img-3">
+          <img src="assets/images/pexels-skylar-kang-6044235.jpg" alt="Material textil exclusivo" loading="lazy">
+        </div>
+      </div>
+      <div class="flow-inner materia-copy">
+        <h2 class="materia-title">La tela que levanta una colección</h2>
+        <p class="materia-text">Close-up: textura, caída, luz. El diferencial está en el tacto, la composición, la durabilidad. Mood: quiet luxury, modern heritage, dark romantic.</p>
+        <a href="#contacto" class="btn btn-primary">Pedir muestrarios</a>
+      </div>
+    </div>
+
+    <!-- Testimonios: quotes flotantes, sin cajas -->
+    <div class="flow-block testimonios-block">
+      <div class="flow-inner">
+        <p class="testimonio-quote">"Calidad notable. La diferencia se nota cuando hay compromiso con el producto."</p>
+        <p class="testimonio-quote">"Recomendado para quienes buscan algo más que lo estándar."</p>
+        <p class="testimonio-quote">"La curaduría hace la diferencia. Gran Barón entiende de moda."</p>
+      </div>
+    </div>
+
+    <!-- FAQ: minimal, sin bordes -->
+    <section id="faq" class="flow-block faq-block" aria-labelledby="faq-heading">
+      <div class="flow-inner">
+        <h2 id="faq-heading" class="flow-title">Preguntas frecuentes</h2>
+        <dl class="faq-list">
+          <div class="faq-item">
+            <dt><button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-1" id="faq-q1" data-faq-target="faq-1">¿Cómo puedo realizar un pedido?</button></dt>
+            <dd id="faq-1" class="faq-answer" aria-labelledby="faq-q1" hidden>Contactanos por WhatsApp, email o el formulario. Te respondemos a la brevedad.</dd>
+          </div>
+          <div class="faq-item">
+            <dt><button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-2" id="faq-q2" data-faq-target="faq-2">¿Hacen envíos a todo el país?</button></dt>
+            <dd id="faq-2" class="faq-answer" aria-labelledby="faq-q2" hidden>Sí. Los tiempos y costos varían según la zona; te los detallamos al consultar.</dd>
+          </div>
+          <div class="faq-item">
+            <dt><button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-3" id="faq-q3" data-faq-target="faq-3">¿Cuál es el tiempo de entrega?</button></dt>
+            <dd id="faq-3" class="faq-answer" aria-labelledby="faq-q3" hidden>Entre 3 y 7 días hábiles para zonas urbanas. Te confirmamos al realizar el pedido.</dd>
+          </div>
+          <div class="faq-item">
+            <dt><button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-4" id="faq-q4" data-faq-target="faq-4">¿Ofrecen muestras?</button></dt>
+            <dd id="faq-4" class="faq-answer" aria-labelledby="faq-q4" hidden>Sí. Consultanos por muestrarios o por opciones para eventos y colecciones.</dd>
+          </div>
+          <div class="faq-item">
+            <dt><button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-5" id="faq-q5" data-faq-target="faq-5">¿Trabajan con mayoristas?</button></dt>
+            <dd id="faq-5" class="faq-answer" aria-labelledby="faq-q5" hidden>Sí. Escribinos indicando tu rubro y volumen de interés.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- Contacto: integrado al flujo -->
+    <section id="contacto" class="flow-block contacto-block" aria-labelledby="contacto-heading">
+      <div class="flow-inner contacto-inner">
+        <h2 id="contacto-heading" class="flow-title">Contacto</h2>
+        <div class="contacto-layout">
+          <form class="contacto-form" id="contactForm" novalidate>
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" name="nombre" required autocomplete="name" placeholder="Tu nombre">
+              <span class="form-error" id="error-nombre" role="alert"></span>
+            </div>
+            <div class="form-group">
+              <label for="email">Email o teléfono</label>
+              <input type="text" id="email" name="email" required placeholder="email@ejemplo.com o 11 1234-5678">
+              <span class="form-error" id="error-email" role="alert"></span>
+            </div>
+            <div class="form-group">
+              <label for="mensaje">Mensaje</label>
+              <textarea id="mensaje" name="mensaje" required rows="4" placeholder="¿En qué podemos ayudarte?"></textarea>
+              <span class="form-error" id="error-mensaje" role="alert"></span>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Enviar</button>
+            <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+          </form>
+          <div class="contacto-links">
+            <a href="https://wa.me/5491112345678" class="contacto-link" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            <a href="mailto:hola@granbaron.com" class="contacto-link">hola@granbaron.com</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© Gran Barón</p>
+  </footer>
+
+  <button type="button" class="btn-back-top" id="backTop" aria-label="Volver arriba" title="Volver arriba">↑</button>
+
+  <script src="main.js"></script>
+</body>
+</html>
