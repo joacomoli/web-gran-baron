@@ -10,7 +10,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="page-loading">
+  <div class="reveal-overlay reveal-tela" aria-hidden="true"></div>
+  <div class="cursor-follower" id="cursorFollower" aria-hidden="true"></div>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
   <nav class="navbar" id="navbar" aria-label="Navegación principal">
     <a href="#inicio" class="nav-logo">Gran Barón</a>
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu" aria-label="Abrir menú">
@@ -28,10 +31,10 @@
   </nav>
 
   <!-- Canvas continuo: telas + gradientes + noise -->
-  <div class="canvas-bg" aria-hidden="true">
-    <div class="fabric-layer fabric-hero" style="background-image: url('assets/images/pexels-artempodrez-7232413.jpg')"></div>
-    <div class="fabric-layer fabric-mid" style="background-image: url('assets/images/pexels-marina-zasorina-7717488.jpg')"></div>
-    <div class="fabric-layer fabric-bottom" style="background-image: url('assets/images/pexels-eva-bronzini-7641151.jpg')"></div>
+  <div class="canvas-bg" id="canvasBg" aria-hidden="true">
+    <div class="fabric-layer fabric-hero" data-parallax="0.15" style="background-image: url('assets/images/pexels-artempodrez-7232413.jpg')"></div>
+    <div class="fabric-layer fabric-mid" data-parallax="0.08" style="background-image: url('assets/images/pexels-marina-zasorina-7717488.jpg')"></div>
+    <div class="fabric-layer fabric-bottom" data-parallax="0.05" style="background-image: url('assets/images/pexels-eva-bronzini-7641151.jpg')"></div>
     <div class="gradient-overlay"></div>
     <div class="fabric-hover fabric-hover-1" style="background-image: url('assets/images/pexels-artempodrez-7232413.jpg')"></div>
     <div class="fabric-hover fabric-hover-2" style="background-image: url('assets/images/pexels-marina-zasorina-7717488.jpg')"></div>
@@ -41,18 +44,25 @@
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
+    <!-- SVG blobs decorativos -->
+    <div class="svg-blobs" aria-hidden="true">
+      <svg class="svg-blob svg-blob-1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M45.7,-58.2C58.7,-48.9,67.7,-32.5,70.5,-15.5C73.3,1.5,70,19.1,60.8,33.2C51.6,47.3,36.5,57.9,20.5,63.8C4.5,69.7,-12.4,70.9,-27.5,65.4C-42.6,59.9,-55.9,47.7,-63.4,32.8C-70.9,17.9,-72.6,0.3,-68.2,-15.8C-63.8,-31.9,-53.3,-46.5,-39.2,-55.7C-25.1,-64.9,-7.4,-68.7,9.9,-65.5C27.2,-62.3,32.7,-67.5,45.7,-58.2Z" transform="translate(100 100)"/></svg>
+      <svg class="svg-blob svg-blob-2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M39.2,-52.8C51.2,-43.2,61.4,-30.2,65.8,-15.4C70.2,-0.6,68.8,16,61.2,30.2C53.6,44.4,39.8,56.2,24.2,62.8C8.6,69.4,-8.8,70.8,-24.5,65.6C-40.2,60.4,-54.2,48.6,-62.4,33.8C-70.6,19,-73,1.2,-68.4,-14.2C-63.8,-29.6,-52.2,-43.6,-38.4,-53.2C-24.6,-62.8,-8.6,-68,-4.8,-61.2C-1,-54.4,27.2,-62.4,39.2,-52.8Z" transform="translate(100 100)"/></svg>
+      <svg class="svg-blob svg-blob-3" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M35.6,-48.9C46.2,-39.8,54.2,-27.2,57.8,-13.4C61.4,0.4,60.6,15.4,54.2,27.8C47.8,40.2,35.8,50,21.8,55.8C7.8,61.6,-8.2,63.4,-22.4,59.2C-36.6,55,-49,44.8,-56.8,31.6C-64.6,18.4,-67.8,2.2,-65.2,-12.6C-62.6,-27.4,-54.2,-40.8,-42.6,-49.9C-31,-59,-16.2,-63.8,-0.8,-62.6C14.6,-61.4,25,-58.1,35.6,-48.9Z" transform="translate(100 100)"/></svg>
+    </div>
   </div>
 
   <main class="flow">
     <!-- Hero: full bleed sobre tela -->
     <header id="inicio" class="flow-block hero-block" aria-labelledby="hero-heading">
+      <div class="hero-blob-animated" aria-hidden="true"></div>
       <div class="flow-inner hero-inner">
         <h1 id="hero-heading" class="hero-title">Gran Barón</h1>
         <p class="hero-phrase">Diseñar empieza en la materia.</p>
         <p class="hero-tagline">Importamos textiles exclusivos desde China para marcas argentinas que quieren diseñar con visión internacional.</p>
         <div class="hero-ctas">
-          <a href="#materia" class="btn btn-primary">Explorar colección</a>
-          <a href="#contacto" class="btn btn-secondary">Contactar</a>
+          <a href="#materia" class="btn btn-primary btn-magnetic">Explorar colección</a>
+          <a href="#contacto" class="btn btn-secondary btn-magnetic">Contactar</a>
         </div>
       </div>
     </header>
@@ -60,7 +70,7 @@
     <!-- Frase editorial flotante -->
     <div id="propuesta" class="flow-block phrase-block">
       <div class="flow-inner">
-        <p class="editorial-phrase">Curaduría textil.<br>Tendencia.<br>Exclusividad.</p>
+        <p class="editorial-phrase"><span class="phrase-word" data-tooltip="Selección y criterio. No vendemos telas, vendemos curaduría.">Curaduría</span> textil.<br><span class="phrase-word" data-tooltip="Sabemos lo que vuelve. Vemos Europa. Traemos el futuro.">Tendencia</span>.<br><span class="phrase-word" data-tooltip="Textiles exclusivos que no tiene cualquiera.">Exclusividad</span>.</p>
       </div>
     </div>
 
@@ -69,22 +79,22 @@
       <div class="flow-inner pillars-inner">
         <p class="pillar-label">Lo que nos define</p>
         <div class="pillars-flow">
-          <div class="pillar" data-pillar="1">
+          <div class="pillar pillar-stagger" data-pillar="1" data-stagger="0">
             <span class="pillar-num">01</span>
             <h3>Radar de moda</h3>
             <p>Sabemos lo que vuelve. Vemos Europa. Traemos el futuro.</p>
           </div>
-          <div class="pillar" data-pillar="2">
+          <div class="pillar pillar-stagger" data-pillar="2" data-stagger="1">
             <span class="pillar-num">02</span>
             <h3>Materia prima de lujo</h3>
             <p>Textura, caída, luz. Cada tela como pieza de colección.</p>
           </div>
-          <div class="pillar" data-pillar="3">
+          <div class="pillar pillar-stagger" data-pillar="3" data-stagger="2">
             <span class="pillar-num">03</span>
             <h3>Dirección creativa</h3>
             <p>Sabemos de confección, de usos reales. Ayudamos a producir mejor.</p>
           </div>
-          <div class="pillar" data-pillar="4">
+          <div class="pillar pillar-stagger" data-pillar="4" data-stagger="3">
             <span class="pillar-num">04</span>
             <h3>Moda como cultura</h3>
             <p>No somos proveedor. Somos institución creativa.</p>
@@ -96,20 +106,20 @@
     <!-- Materia: imágenes de telas + texto overlay -->
     <div id="materia" class="flow-block materia-block">
       <div class="materia-visual">
-        <div class="materia-img-wrap materia-img-1">
+        <div class="materia-img-wrap materia-img-1 tilt-card" data-lightbox="assets/images/pexels-mccutcheon-3731097.jpg">
           <img src="assets/images/pexels-mccutcheon-3731097.jpg" alt="Detalle de textura textil" loading="lazy">
         </div>
-        <div class="materia-img-wrap materia-img-2">
+        <div class="materia-img-wrap materia-img-2 tilt-card" data-lightbox="assets/images/pexels-enginakyurt-1460890.jpg">
           <img src="assets/images/pexels-enginakyurt-1460890.jpg" alt="Tela premium en detalle" loading="lazy">
         </div>
-        <div class="materia-img-wrap materia-img-3">
+        <div class="materia-img-wrap materia-img-3 tilt-card" data-lightbox="assets/images/pexels-skylar-kang-6044235.jpg">
           <img src="assets/images/pexels-skylar-kang-6044235.jpg" alt="Material textil exclusivo" loading="lazy">
         </div>
       </div>
-      <div class="flow-inner materia-copy">
+      <div class="flow-inner materia-copy tilt-card">
         <h2 class="materia-title">La tela que levanta una colección</h2>
-        <p class="materia-text">Close-up: textura, caída, luz. El diferencial está en el tacto, la composición, la durabilidad. Mood: quiet luxury, modern heritage, dark romantic.</p>
-        <a href="#contacto" class="btn btn-primary">Pedir muestrarios</a>
+        <p class="materia-text">Close-up: textura, caída, luz. El diferencial está en el tacto, la composición, la durabilidad. Mood: <span class="phrase-word" data-tooltip="Lujo discreto, sin ostentación.">quiet luxury</span>, modern heritage, dark romantic.</p>
+        <a href="#contacto" class="btn btn-primary btn-magnetic">Pedir muestrarios</a>
       </div>
     </div>
 
@@ -157,22 +167,25 @@
         <h2 id="contacto-heading" class="flow-title">Contacto</h2>
         <div class="contacto-layout">
           <form class="contacto-form" id="contactForm" novalidate>
-            <div class="form-group">
+            <div class="form-group form-group-float">
+              <input type="text" id="nombre" name="nombre" required autocomplete="name" placeholder=" ">
               <label for="nombre">Nombre</label>
-              <input type="text" id="nombre" name="nombre" required autocomplete="name" placeholder="Tu nombre">
               <span class="form-error" id="error-nombre" role="alert"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group form-group-float">
+              <input type="text" id="email" name="email" required placeholder=" ">
               <label for="email">Email o teléfono</label>
-              <input type="text" id="email" name="email" required placeholder="email@ejemplo.com o 11 1234-5678">
               <span class="form-error" id="error-email" role="alert"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group form-group-float">
+              <textarea id="mensaje" name="mensaje" required rows="4" placeholder=" "></textarea>
               <label for="mensaje">Mensaje</label>
-              <textarea id="mensaje" name="mensaje" required rows="4" placeholder="¿En qué podemos ayudarte?"></textarea>
               <span class="form-error" id="error-mensaje" role="alert"></span>
             </div>
-            <button type="submit" class="btn btn-primary btn-full">Enviar</button>
+            <button type="submit" class="btn btn-primary btn-full btn-submit" id="btnSubmit">
+              <span class="btn-text">Enviar</span>
+              <span class="btn-success" aria-hidden="true">✓</span>
+            </button>
             <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
           </form>
           <div class="contacto-links">
@@ -186,7 +199,16 @@
 
   <footer class="footer">
     <p>© Gran Barón</p>
+    <button type="button" class="btn-quiet" id="btnQuiet" aria-pressed="false" aria-label="Modo tranquilo: reducir animaciones">Modo tranquilo</button>
   </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Ampliar imagen">
+    <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Cerrar">×</button>
+    <div class="lightbox-content">
+      <img src="" alt="" id="lightboxImg">
+    </div>
+  </div>
 
   <button type="button" class="btn-back-top" id="backTop" aria-label="Volver arriba" title="Volver arriba">↑</button>
 
