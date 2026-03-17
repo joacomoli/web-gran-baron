@@ -1,0 +1,4 @@
+# Videos (evitar subir a GitHub por peso)
+*.mp4
+*.webm
+*.mov

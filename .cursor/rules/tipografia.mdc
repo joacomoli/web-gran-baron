@@ -1,0 +1,24 @@
+---
+description: Tipografías del proyecto Gran Barón
+globs: "**/*.css,**/*.html"
+alwaysApply: false
+---
+
+# Tipografías Gran Barón
+
+## Regla obligatoria
+
+- **Títulos** (h1, h2, h3, títulos de sección, frases destacadas): `font-family: var(--font-display)` → **Cormorant Garamond**
+- **Textos** (párrafos, labels, botones, inputs, enlaces): `font-family: var(--font-body)` → **Inter**
+
+## Variables CSS
+
+```css
+--font-display: 'Cormorant Garamond', Georgia, serif;
+--font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+```
+
+## Ejemplos
+
+- `.hero-title`, `.flow-title`, `.socio-title`, `.pillar h3` → Cormorant Garamond
+- `body`, `.hero-tagline`, `.proceso-text`, `.socio-text p`, `.faq-question`, formularios → Inter

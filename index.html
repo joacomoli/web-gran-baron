@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Gran Barón — Curaduría textil. Importamos textiles exclusivos para marcas que diseñan con visión internacional.">
+  <meta name="description" content="Gran Barón — No vendemos telas, armamos colecciones. Importadores directos de textiles, venta por mayor a todo el país.">
   <title>Gran Barón | Curaduría Textil</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +15,7 @@
   <div class="cursor-follower" id="cursorFollower" aria-hidden="true"></div>
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
   <nav class="navbar" id="navbar" aria-label="Navegación principal">
-    <a href="#inicio" class="nav-logo">Gran Barón</a>
+    <a href="#inicio" class="nav-logo"><img src="assets/images/LOGO%20NEGRO.png" alt="Gran Barón"></a>
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu" aria-label="Abrir menú">
       <span></span>
       <span></span>
@@ -24,7 +24,9 @@
     <ul class="nav-menu" id="navMenu" role="menubar">
       <li role="none"><a href="#inicio" role="menuitem">Inicio</a></li>
       <li role="none"><a href="#propuesta" role="menuitem">Propuesta</a></li>
-      <li role="none"><a href="#materia" role="menuitem">Materia</a></li>
+      <li role="none"><a href="#proceso" role="menuitem">Proceso</a></li>
+      <li role="none" class="nav-item-hidden"><a href="#marcas" role="menuitem">Marcas</a></li>
+      <li role="none"><a href="#socio" role="menuitem">Socio</a></li>
       <li role="none"><a href="#faq" role="menuitem">FAQ</a></li>
       <li role="none"><a href="#contacto" role="menuitem">Contacto</a></li>
     </ul>
@@ -35,11 +37,15 @@
     <div class="fabric-layer fabric-hero" data-parallax="0.15" style="background-image: url('assets/images/pexels-artempodrez-7232413.jpg')"></div>
     <div class="fabric-layer fabric-mid" data-parallax="0.08" style="background-image: url('assets/images/pexels-marina-zasorina-7717488.jpg')"></div>
     <div class="fabric-layer fabric-bottom" data-parallax="0.05" style="background-image: url('assets/images/pexels-eva-bronzini-7641151.jpg')"></div>
-    <div class="gradient-overlay"></div>
+    <div class="fabric-layer fabric-extra" data-parallax="0.03" style="background-image: url('assets/images/pexels-artempodrez-7232405.jpg')"></div>
+    <div class="fabric-layer fabric-extra-2" data-parallax="0.06" style="background-image: url('assets/images/pexels-mikhail-nilov-7676662.jpg')"></div>
+    <div class="gradient-overlay" id="gradientOverlay"></div>
     <div class="fabric-hover fabric-hover-1" style="background-image: url('assets/images/pexels-artempodrez-7232413.jpg')"></div>
     <div class="fabric-hover fabric-hover-2" style="background-image: url('assets/images/pexels-marina-zasorina-7717488.jpg')"></div>
     <div class="fabric-hover fabric-hover-3" style="background-image: url('assets/images/pexels-eva-bronzini-7641151.jpg')"></div>
     <div class="fabric-hover fabric-hover-4" style="background-image: url('assets/images/pexels-mccutcheon-3731097.jpg')"></div>
+    <div class="fabric-hover fabric-hover-5" style="background-image: url('assets/images/pexels-gabby-k-7794330.jpg')"></div>
+    <div class="fabric-hover fabric-hover-6" style="background-image: url('assets/images/pexels-karola-g-4814061.jpg')"></div>
     <div class="noise-layer"></div>
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -53,78 +59,152 @@
   </div>
 
   <main class="flow">
-    <!-- Hero: full bleed sobre tela -->
+    <!-- Hero: video de fondo + frases -->
     <header id="inicio" class="flow-block hero-block" aria-labelledby="hero-heading">
-      <div class="hero-blob-animated" aria-hidden="true"></div>
-      <div class="flow-inner hero-inner">
-        <h1 id="hero-heading" class="hero-title">Gran Barón</h1>
-        <p class="hero-phrase">Diseñar empieza en la materia.</p>
-        <p class="hero-tagline">Importamos textiles exclusivos desde China para marcas argentinas que quieren diseñar con visión internacional.</p>
+      <video class="hero-video-bg" autoplay muted loop playsinline aria-hidden="true">
+        <source src="assets/images/gb%20video.mp4" type="video/mp4">
+      </video>
+      <div class="hero-video-overlay" aria-hidden="true"></div>
+      <div class="flow-inner hero-inner" data-hero-parallax>
+        <h1 id="hero-heading" class="hero-title">No vendemos telas, armamos colecciones.</h1>
+        <p class="hero-tagline">Importadores directos de textiles, venta por mayor a todo el país.</p>
         <div class="hero-ctas">
-          <a href="#materia" class="btn btn-primary btn-magnetic">Explorar colección</a>
+          <a href="#socio" class="btn btn-primary btn-magnetic">Ver colección Invierno 2026</a>
+          <a href="#socio" class="btn btn-primary btn-magnetic">Ver colección Verano 2027</a>
           <a href="#contacto" class="btn btn-secondary btn-magnetic">Contactar</a>
         </div>
       </div>
     </header>
 
-    <!-- Frase editorial flotante -->
-    <div id="propuesta" class="flow-block phrase-block">
-      <div class="flow-inner">
-        <p class="editorial-phrase"><span class="phrase-word" data-tooltip="Selección y criterio. No vendemos telas, vendemos curaduría.">Curaduría</span> textil.<br><span class="phrase-word" data-tooltip="Sabemos lo que vuelve. Vemos Europa. Traemos el futuro.">Tendencia</span>.<br><span class="phrase-word" data-tooltip="Textiles exclusivos que no tiene cualquiera.">Exclusividad</span>.</p>
+    <!-- Frase editorial flotante + icono mundo orbitando -->
+    <div id="propuesta" class="flow-block phrase-block scroll-reveal scroll-reveal-left">
+      <div class="phrase-orbit-container">
+        <div class="phrase-orbit-track" id="phraseOrbitTrack" aria-hidden="true">
+          <div class="phrase-orbit-planet"></div>
+        </div>
+        <div class="flow-inner">
+          <p class="editorial-phrase"><span class="phrase-word phrase-word-reveal" data-tooltip="Selección y criterio. No vendemos telas, vendemos curaduría." data-reveal="0">Curaduría</span> <span class="phrase-word-reveal" data-reveal="1">textil.</span><br><span class="phrase-word phrase-word-reveal" data-tooltip="Sabemos lo que vuelve. Vemos Europa. Traemos el futuro." data-reveal="2">Tendencia</span>.<br><span class="phrase-word phrase-word-reveal" data-tooltip="Textiles exclusivos que no tiene cualquiera." data-reveal="3">Exclusividad</span>.</p>
+        </div>
       </div>
     </div>
 
-    <!-- Pilares: sin cards, texto flotante -->
-    <div class="flow-block pillars-block">
+    <!-- Proceso: 3 pasos con imágenes y líneas conectoras -->
+    <section id="proceso" class="flow-block proceso-block scroll-reveal">
+      <div class="flow-inner proceso-inner">
+        <p class="proceso-label">Cómo trabajamos</p>
+        <div class="proceso-steps">
+          <!-- SVG overlay: líneas que conectan punto 1→2 y 2→3 -->
+          <svg class="proceso-connector-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path class="connector-path connector-path-1" d="M 18 18 C 50 18 58 48 82 50" fill="none" stroke="currentColor" stroke-width="0.28"/>
+            <path class="connector-path connector-path-2" d="M 82 50 C 58 52 50 75 18 82" fill="none" stroke="currentColor" stroke-width="0.28"/>
+          </svg>
+          <article class="proceso-step proceso-step-1 proceso-reveal" data-step="1">
+            <div class="proceso-num" data-connector-point>1</div>
+            <div class="proceso-content">
+              <div class="proceso-img-wrap">
+                <img src="assets/images/punto1.png" alt="Tendencias en Europa" loading="lazy">
+              </div>
+              <p class="proceso-text">Viajamos a Europa a buscar las <strong>tendencias</strong> que mejor se adaptan al mercado argentino.</p>
+            </div>
+          </article>
+          <article class="proceso-step proceso-step-2 proceso-reveal" data-step="2">
+            <div class="proceso-num" data-connector-point>2</div>
+            <div class="proceso-content">
+              <div class="proceso-img-wrap">
+                <img src="assets/images/punto2.png" alt="Importación directa" loading="lazy">
+              </div>
+              <p class="proceso-text">Seleccionamos e <strong>importamos</strong> los textiles de forma directa al país.</p>
+            </div>
+          </article>
+          <article class="proceso-step proceso-step-3 proceso-reveal" data-step="3">
+            <div class="proceso-num" data-connector-point>3</div>
+            <div class="proceso-content">
+              <div class="proceso-img-wrap">
+                <img src="assets/images/punto3.png" alt="Asesoramiento en colecciones" loading="lazy">
+              </div>
+              <p class="proceso-text">Nuestro equipo de diseñadores te <strong>asesora</strong> para armar la mejor colección.</p>
+            </div>
+          </article>
+        </div>
+        <p class="proceso-summary proceso-reveal">Traemos tanto básicos como géneros diferenciados para destacar tus prendas.</p>
+      </div>
+    </section>
+
+    <!-- Pilares: 4 ítems en 2x2, solo texto -->
+    <div class="flow-block pillars-block scroll-reveal scroll-reveal-right" id="pillarsBlock">
       <div class="flow-inner pillars-inner">
         <p class="pillar-label">Lo que nos define</p>
-        <div class="pillars-flow">
-          <div class="pillar pillar-stagger" data-pillar="1" data-stagger="0">
-            <span class="pillar-num">01</span>
-            <h3>Radar de moda</h3>
-            <p>Sabemos lo que vuelve. Vemos Europa. Traemos el futuro.</p>
+        <div class="pillars-grid">
+          <div class="pillar-globe pillar-stagger" data-pillar="1" data-stagger="0">
+            <div class="pillar-globe-text">
+              <span class="pillar-num" data-pillar-value="1">01</span>
+              <h3>Radar de moda</h3>
+              <p>Sabemos lo que vuelve. Vemos Europa. Traemos el futuro.</p>
+            </div>
           </div>
-          <div class="pillar pillar-stagger" data-pillar="2" data-stagger="1">
-            <span class="pillar-num">02</span>
-            <h3>Materia prima de lujo</h3>
-            <p>Textura, caída, luz. Cada tela como pieza de colección.</p>
+          <div class="pillar-globe pillar-stagger" data-pillar="2" data-stagger="1">
+            <div class="pillar-globe-text">
+              <span class="pillar-num" data-pillar-value="2">02</span>
+              <h3>Materia prima de lujo</h3>
+              <p>Textura, caída, luz. Cada tela como pieza de colección.</p>
+            </div>
           </div>
-          <div class="pillar pillar-stagger" data-pillar="3" data-stagger="2">
-            <span class="pillar-num">03</span>
-            <h3>Dirección creativa</h3>
-            <p>Sabemos de confección, de usos reales. Ayudamos a producir mejor.</p>
+          <div class="pillar-globe pillar-stagger" data-pillar="3" data-stagger="2">
+            <div class="pillar-globe-text">
+              <span class="pillar-num" data-pillar-value="3">03</span>
+              <h3>Dirección creativa</h3>
+              <p>Sabemos de confección, de usos reales. Ayudamos a producir mejor.</p>
+            </div>
           </div>
-          <div class="pillar pillar-stagger" data-pillar="4" data-stagger="3">
-            <span class="pillar-num">04</span>
-            <h3>Moda como cultura</h3>
-            <p>No somos proveedor. Somos institución creativa.</p>
+          <div class="pillar-globe pillar-stagger" data-pillar="4" data-stagger="3">
+            <div class="pillar-globe-text">
+              <span class="pillar-num" data-pillar-value="4">04</span>
+              <h3>Moda como cultura</h3>
+              <p>No somos proveedor. Somos institución creativa.</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Materia: imágenes de telas + texto overlay -->
-    <div id="materia" class="flow-block materia-block">
-      <div class="materia-visual">
-        <div class="materia-img-wrap materia-img-1 tilt-card" data-lightbox="assets/images/pexels-mccutcheon-3731097.jpg">
-          <img src="assets/images/pexels-mccutcheon-3731097.jpg" alt="Detalle de textura textil" loading="lazy">
-        </div>
-        <div class="materia-img-wrap materia-img-2 tilt-card" data-lightbox="assets/images/pexels-enginakyurt-1460890.jpg">
-          <img src="assets/images/pexels-enginakyurt-1460890.jpg" alt="Tela premium en detalle" loading="lazy">
-        </div>
-        <div class="materia-img-wrap materia-img-3 tilt-card" data-lightbox="assets/images/pexels-skylar-kang-6044235.jpg">
-          <img src="assets/images/pexels-skylar-kang-6044235.jpg" alt="Material textil exclusivo" loading="lazy">
+    <!-- Marcas que confiaron en Gran Barón (oculta por ahora) -->
+    <section id="marcas" class="flow-block marcas-block scroll-reveal is-hidden">
+      <div class="flow-inner">
+        <h2 class="marcas-title">Marcas que confiaron en nosotros</h2>
+        <div class="marcas-logos" id="marcasLogos">
+          <div class="marca-logo" data-size="s"><div class="marca-logo-inner"><span>Marca</span></div></div>
+          <div class="marca-logo" data-size="m"><div class="marca-logo-inner"><span>Marca</span></div></div>
+          <div class="marca-logo" data-size="l"><div class="marca-logo-inner"><span>Marca</span></div></div>
+          <div class="marca-logo" data-size="s"><div class="marca-logo-inner"><span>Marca</span></div></div>
+          <div class="marca-logo" data-size="m"><div class="marca-logo-inner"><span>Marca</span></div></div>
+          <div class="marca-logo" data-size="l"><div class="marca-logo-inner"><span>Marca</span></div></div>
+          <div class="marca-logo" data-size="m"><div class="marca-logo-inner"><span>Marca</span></div></div>
         </div>
       </div>
-      <div class="flow-inner materia-copy tilt-card">
-        <h2 class="materia-title">La tela que levanta una colección</h2>
-        <p class="materia-text">Close-up: textura, caída, luz. El diferencial está en el tacto, la composición, la durabilidad. Mood: <span class="phrase-word" data-tooltip="Lujo discreto, sin ostentación.">quiet luxury</span>, modern heritage, dark romantic.</p>
-        <a href="#contacto" class="btn btn-primary btn-magnetic">Pedir muestrarios</a>
-      </div>
-    </div>
+    </section>
 
-    <!-- Testimonios: quotes flotantes, sin cajas -->
-    <div class="flow-block testimonios-block">
+    <!-- Socio estratégico: texto + galería mosaico viaje -->
+    <section id="socio" class="flow-block socio-block scroll-reveal">
+      <div class="flow-inner socio-inner">
+        <h2 class="socio-title">Más que proveedores: somos tu socio estratégico en telas y tendencias</h2>
+        <div class="socio-layout">
+          <div class="socio-gallery socio-gallery-rotating" id="socioGallery">
+            <div class="gallery-item gallery-slot" data-slot="0"></div>
+            <div class="gallery-item gallery-slot" data-slot="1"></div>
+            <div class="gallery-item gallery-slot" data-slot="2"></div>
+            <div class="gallery-item gallery-slot" data-slot="3"></div>
+          </div>
+          <div class="socio-text">
+            <p>En nuestro equipo hay <strong>diseñadores expertos</strong> que seleccionan cada género con conocimiento real de tendencias y mercado: analizamos lo que están haciendo las grandes marcas, lo traducimos a propuestas posibles y vendibles, y lo adaptamos al ritmo del consumidor argentino.</p>
+            <p>Te acompañamos a elegir las telas que mejor encajen con tu identidad de marca y con la colección que tenés en mente, para que tu compra tenga <strong>coherencia, rotación y salida</strong>.</p>
+            <p>Acá no hay elecciones al azar: hay <strong>curaduría</strong>, criterio comercial y una mirada estratégica para que inviertas con confianza.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonios: quotes flotantes (oculto por ahora) -->
+    <div class="flow-block testimonios-block scroll-reveal is-hidden" data-scroll-fabric="5">
       <div class="flow-inner">
         <p class="testimonio-quote">"Calidad notable. La diferencia se nota cuando hay compromiso con el producto."</p>
         <p class="testimonio-quote">"Recomendado para quienes buscan algo más que lo estándar."</p>
@@ -133,36 +213,54 @@
     </div>
 
     <!-- FAQ: minimal, sin bordes -->
-    <section id="faq" class="flow-block faq-block" aria-labelledby="faq-heading">
+    <section id="faq" class="flow-block faq-block scroll-reveal scroll-reveal-right" aria-labelledby="faq-heading">
       <div class="flow-inner">
         <h2 id="faq-heading" class="flow-title">Preguntas frecuentes</h2>
         <dl class="faq-list">
           <div class="faq-item">
-            <dt><button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-1" id="faq-q1" data-faq-target="faq-1">¿Cómo puedo realizar un pedido?</button></dt>
-            <dd id="faq-1" class="faq-answer" aria-labelledby="faq-q1" hidden>Contactanos por WhatsApp, email o el formulario. Te respondemos a la brevedad.</dd>
+            <dt><button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-1" id="faq-q1" data-faq-target="faq-1">¿Cómo es trabajar con Gran Barón?</button></dt>
+            <dd id="faq-1" class="faq-answer" aria-labelledby="faq-q1" hidden>Es un proceso de acompañamiento: primero entendemos tu marca y la colección que querés armar, 
+              después te asesoramos para elegir los géneros y colores que mejor encajan con tu propuesta, 
+              y por último coordinamos el pedido y la entrega. No es solo comprar tela: es comprar con criterio, dirección y respaldo.</dd>
           </div>
           <div class="faq-item">
-            <dt><button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-2" id="faq-q2" data-faq-target="faq-2">¿Hacen envíos a todo el país?</button></dt>
-            <dd id="faq-2" class="faq-answer" aria-labelledby="faq-q2" hidden>Sí. Los tiempos y costos varían según la zona; te los detallamos al consultar.</dd>
+            <dt><button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-2" id="faq-q2" data-faq-target="faq-2">¿Cómo cambia el proceso si no soy de Buenos Aires?</button></dt>
+            <dd id="faq-2" class="faq-answer" aria-labelledby="faq-q2" hidden>No cambia: trabajamos 100% a distancia por videollamada. Te mostramos la colección en tiempo real, te asesoramos según tu marca y la colección que tenés en mente, y coordinamos el envío a tu ciudad para que recibas el pedido sin moverte.</dd>
           </div>
           <div class="faq-item">
-            <dt><button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-3" id="faq-q3" data-faq-target="faq-3">¿Cuál es el tiempo de entrega?</button></dt>
-            <dd id="faq-3" class="faq-answer" aria-labelledby="faq-q3" hidden>Entre 3 y 7 días hábiles para zonas urbanas. Te confirmamos al realizar el pedido.</dd>
+            <dt><button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-3" id="faq-q3" data-faq-target="faq-3">¿Cómo puedo realizar un pedido?</button></dt>
+            <dd id="faq-3" class="faq-answer" aria-labelledby="faq-q3" hidden>Completá el formulario en la sección de contacto o envianos un What’sApp para que podamos ayudarte.</dd>
           </div>
           <div class="faq-item">
-            <dt><button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-4" id="faq-q4" data-faq-target="faq-4">¿Ofrecen muestras?</button></dt>
-            <dd id="faq-4" class="faq-answer" aria-labelledby="faq-q4" hidden>Sí. Consultanos por muestrarios o por opciones para eventos y colecciones.</dd>
+            <dt><button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-4" id="faq-q4" data-faq-target="faq-4">¿Hacen envíos a todo el país?</button></dt>
+            <dd id="faq-4" class="faq-answer" aria-labelledby="faq-q4" hidden>Sí, hacemos envíos a todo Argentina.</dd>
           </div>
           <div class="faq-item">
-            <dt><button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-5" id="faq-q5" data-faq-target="faq-5">¿Trabajan con mayoristas?</button></dt>
-            <dd id="faq-5" class="faq-answer" aria-labelledby="faq-q5" hidden>Sí. Escribinos indicando tu rubro y volumen de interés.</dd>
+            <dt><button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-5" id="faq-q5" data-faq-target="faq-5">¿Cuál es el mínimo de compra?</button></dt>
+            <dd id="faq-5" class="faq-answer" aria-labelledby="faq-q5" hidden>1 rollo cerrado, no vendemos por menor.</dd>
+          </div>
+          <div class="faq-item">
+            <dt><button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-6" id="faq-q6" data-faq-target="faq-6">¿Ofrecen muestras?</button></dt>
+            <dd id="faq-6" class="faq-answer" aria-labelledby="faq-q6" hidden>Sí. Consultanos por muestrarios o por opciones para eventos y colecciones.</dd>
+          </div>
+          <div class="faq-item">
+            <dt><button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-7" id="faq-q7" data-faq-target="faq-7">¿Trabajan con mayoristas?</button></dt>
+            <dd id="faq-7" class="faq-answer" aria-labelledby="faq-q7" hidden>Sí. Escribinos indicando tu rubro y volumen de interés.</dd>
           </div>
         </dl>
       </div>
     </section>
 
+    <!-- CTA antes de contacto -->
+    <div class="flow-block cta-block scroll-reveal">
+      <div class="flow-inner">
+        <p class="cta-text">Hagamos que tu próxima colección tenga <strong>salida real</strong>.</p>
+        
+      </div>
+    </div>
+
     <!-- Contacto: integrado al flujo -->
-    <section id="contacto" class="flow-block contacto-block" aria-labelledby="contacto-heading">
+    <section id="contacto" class="flow-block contacto-block scroll-reveal scroll-reveal-left" aria-labelledby="contacto-heading" data-scroll-fabric="6">
       <div class="flow-inner contacto-inner">
         <h2 id="contacto-heading" class="flow-title">Contacto</h2>
         <div class="contacto-layout">
@@ -191,6 +289,14 @@
           <div class="contacto-links">
             <a href="https://wa.me/5491112345678" class="contacto-link" target="_blank" rel="noopener noreferrer">WhatsApp</a>
             <a href="mailto:hola@granbaron.com" class="contacto-link">hola@granbaron.com</a>
+            <div class="contacto-social">
+              <a href="https://www.instagram.com/granbaron_textil/" class="contacto-social-link contacto-social-float" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              </a>
+              <a href="https://www.tiktok.com/@gran.bararon" class="contacto-social-link contacto-social-float" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -202,15 +308,20 @@
     <button type="button" class="btn-quiet" id="btnQuiet" aria-pressed="false" aria-label="Modo tranquilo: reducir animaciones">Modo tranquilo</button>
   </footer>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Ampliar imagen">
+  <!-- Lightbox: imágenes y videos -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Ampliar contenido">
     <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Cerrar">×</button>
     <div class="lightbox-content">
       <img src="" alt="" id="lightboxImg">
+      <video id="lightboxVideo" controls playsinline loop></video>
     </div>
   </div>
 
   <button type="button" class="btn-back-top" id="backTop" aria-label="Volver arriba" title="Volver arriba">↑</button>
+
+  <a href="https://wa.me/5491112345678" class="btn-whatsapp" id="btnWhatsApp" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" title="Contactar por WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
 
   <script src="main.js"></script>
 </body>

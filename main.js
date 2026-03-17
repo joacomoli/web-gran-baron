@@ -113,12 +113,82 @@
       if (scroll > 50) navbar.classList.add('scrolled');
       else navbar.classList.remove('scrolled');
     }
+    // Hero parallax: contenido se mueve y desvanece al scrollear
+    if (!prefersReducedMotion && !document.body.classList.contains('modo-quiet')) {
+      const hero = document.querySelector('[data-hero-parallax]');
+      if (hero) {
+        const heroHeight = document.querySelector('.hero-block')?.offsetHeight || 600;
+        const progress = Math.min(scroll / heroHeight, 1);
+        const y = progress * 40;
+        const opacity = 1 - progress * 0.4;
+        const scale = 1 - progress * 0.05;
+        hero.style.transform = `translateY(${y}px) scale(${scale})`;
+        hero.style.opacity = opacity;
+      }
+    }
+    // Gradiente de fondo que cambia con scroll (más cálido en hero, más oscuro abajo)
+    const gradientOverlay = document.getElementById('gradientOverlay');
+    if (gradientOverlay && !document.body.classList.contains('modo-quiet')) {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? Math.min(scroll / docHeight, 1) : 0;
+      const warm = 0.97 - pct * 0.02;
+      const mid = 0.85 - pct * 0.03;
+      gradientOverlay.style.background = `linear-gradient(180deg, rgba(var(--color-bg-rgb), ${warm}) 0%, rgba(var(--color-bg-rgb), ${mid}) 30%, rgba(var(--color-bg-rgb), 0.9) 70%, rgba(var(--color-bg-rgb), 0.98) 100%)`;
+    }
+    // Telas de fondo: cambian según scroll (transición suave entre capas)
+    const fabricHero = document.querySelector('.fabric-hero');
+    const fabricMid = document.querySelector('.fabric-mid');
+    const fabricBottom = document.querySelector('.fabric-bottom');
+    const fabricExtra = document.querySelector('.fabric-extra');
+    const fabricExtra2 = document.querySelector('.fabric-extra-2');
+    if (fabricHero && fabricMid && fabricBottom && fabricExtra && fabricExtra2 && !document.body.classList.contains('modo-quiet') && !prefersReducedMotion) {
+      const docH = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docH > 0 ? Math.min(scroll / docH, 1) : 0;
+      const base = 0.45;
+      const peak = 0.78;
+      const fade = (pos, width) => Math.exp(-Math.pow((pct - pos) / width, 2));
+      fabricHero.style.opacity = base + (peak - base) * fade(0, 0.35);
+      fabricMid.style.opacity = base + (peak - base) * fade(0.25, 0.3);
+      fabricExtra.style.opacity = base + (peak - base) * fade(0.5, 0.3);
+      fabricBottom.style.opacity = base + (peak - base) * fade(0.7, 0.3);
+      fabricExtra2.style.opacity = base + (peak - base) * fade(1, 0.35);
+    }
+    // Icono mundo orbitando: ángulo según scroll
+    const orbitTrack = document.getElementById('phraseOrbitTrack');
+    if (orbitTrack && !document.body.classList.contains('modo-quiet') && !prefersReducedMotion) {
+      const angle = (scroll * 0.25) % 360;
+      orbitTrack.style.transform = 'rotate(' + angle + 'deg)';
+    }
+    // Proceso: líneas que conectan 1→2 y 2→3, se extienden al scrollear
+    const procesoBlock = document.getElementById('proceso');
+    if (procesoBlock && !document.body.classList.contains('modo-quiet') && !prefersReducedMotion) {
+      const path1 = procesoBlock.querySelector('.connector-path-1');
+      const path2 = procesoBlock.querySelector('.connector-path-2');
+      if (path1 && path2) {
+        const len1 = path1.getTotalLength();
+        const len2 = path2.getTotalLength();
+        path1.style.strokeDasharray = String(len1);
+        path2.style.strokeDasharray = String(len2);
+        const rect = procesoBlock.getBoundingClientRect();
+        const sectionTop = rect.top + scroll;
+        const sectionHeight = procesoBlock.offsetHeight;
+        const viewportHeight = window.innerHeight;
+        const triggerStart = sectionTop - viewportHeight * 0.5;
+        const triggerEnd = sectionTop + sectionHeight - viewportHeight * 0.2;
+        const scrollRange = triggerEnd - triggerStart;
+        const progress = scrollRange > 0 ? Math.max(0, Math.min(1, (scroll - triggerStart) / scrollRange)) : 0;
+        const draw1 = Math.min(1, progress * 2);
+        const draw2 = Math.max(0, Math.min(1, (progress - 0.5) * 2));
+        path1.style.strokeDashoffset = String(len1 * (1 - draw1));
+        path2.style.strokeDashoffset = String(len2 * (1 - draw2));
+      }
+    }
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
   // --- Pilares: hover y stagger ---
-  document.querySelectorAll('.pillar[data-pillar]').forEach((pillar) => {
+  document.querySelectorAll('.pillar-globe[data-pillar]').forEach((pillar) => {
     const id = pillar.getAttribute('data-pillar');
     pillar.addEventListener('mouseenter', () => {
       document.body.classList.add('pillar-hover-' + id);
@@ -128,7 +198,7 @@
     });
   });
 
-  // Stagger: pilares aparecen uno tras otro
+  // Stagger: pilares aparecen uno tras otro + count-up en números
   const pillarObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -136,6 +206,20 @@
         const delay = prefersReducedMotion ? 0 : stagger * 120;
         setTimeout(() => {
           entry.target.classList.add('visible');
+          const numEl = entry.target.querySelector('.pillar-num[data-pillar-value]');
+          if (numEl && !numEl.dataset.animated && !prefersReducedMotion) {
+            numEl.dataset.animated = 'true';
+            const target = parseInt(numEl.getAttribute('data-pillar-value') || '0', 10);
+            let current = 0;
+            const step = target / 15;
+            const dur = 600;
+            const interval = dur / 15;
+            const timer = setInterval(() => {
+              current = Math.min(Math.ceil(current + step), target);
+              numEl.textContent = String(current).padStart(2, '0');
+              if (current >= target) clearInterval(timer);
+            }, interval);
+          }
         }, delay);
       }
     });
@@ -157,6 +241,31 @@
     });
   }, observerOptions);
   document.querySelectorAll('.flow-inner').forEach((el) => observer.observe(el));
+
+  // --- Scroll reveal: slide in + scale + fabric layers ---
+  if (!prefersReducedMotion) {
+    const scrollRevealOptions = { root: null, rootMargin: '0px 0px -100px 0px', threshold: 0.1 };
+    const scrollRevealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          el.classList.add('visible');
+          el.querySelectorAll('.scroll-scale').forEach((child) => child.classList.add('visible'));
+          const fabricId = el.getAttribute('data-scroll-fabric');
+          if (fabricId) {
+            document.body.classList.add('scroll-fabric-' + fabricId);
+          }
+          if (el.classList.contains('proceso-block')) {
+            const steps = el.querySelectorAll('.proceso-reveal');
+            steps.forEach((step, i) => {
+              setTimeout(() => step.classList.add('visible'), i * 150);
+            });
+          }
+        }
+      });
+    }, scrollRevealOptions);
+    document.querySelectorAll('.scroll-reveal').forEach((el) => scrollRevealObserver.observe(el));
+  }
 
   // --- Botones magnéticos ---
   if (!prefersReducedMotion) {
@@ -192,31 +301,342 @@
     });
   }
 
-  // --- Lightbox ---
+  // --- Marcas: hover magnético suave (logo cercano se acerca, otros se alejan) con lerp ---
+  if (!prefersReducedMotion && !isTouch) {
+    const marcasLogos = document.getElementById('marcasLogos');
+    const marcasSection = marcasLogos?.closest('.marcas-block');
+    if (marcasSection?.classList.contains('is-hidden')) {
+      /* Sección oculta: no inicializar hover */
+    } else {
+    const marcaItems = marcasLogos ? marcasLogos.querySelectorAll('.marca-logo') : [];
+    const ATTRACT = 0.18;
+    const REPEL_BASE = 0.06;
+    const REPEL_RADIUS = 200;
+    const LERP = 0.06;
+
+    if (marcasLogos && marcaItems.length) {
+      let mouseX = -9999, mouseY = -9999;
+      const current = Array.from(marcaItems).map(() => ({ x: 0, y: 0 }));
+      let rafId = null;
+      let animating = true;
+
+      function updateMarcas() {
+        if (mouseX === -9999) {
+          marcaItems.forEach((el, i) => {
+            current[i].x *= 0.88;
+            current[i].y *= 0.88;
+            if (Math.abs(current[i].x) < 0.5 && Math.abs(current[i].y) < 0.5) {
+              current[i].x = 0;
+              current[i].y = 0;
+            }
+            el.style.transform = `translate(calc(-50% + ${current[i].x}px), calc(-50% + ${current[i].y}px))`;
+          });
+          const settled = current.every((c) => Math.abs(c.x) < 0.5 && Math.abs(c.y) < 0.5);
+          if (settled) animating = false;
+        } else {
+          let minDist = Infinity;
+          let closest = null;
+          marcaItems.forEach((el) => {
+            const rect = el.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const d = Math.hypot(mouseX - cx, mouseY - cy);
+            if (d < minDist) { minDist = d; closest = el; }
+          });
+
+          const repelMultiplier = minDist < 120 ? 1 + (120 - minDist) / 100 : 1;
+
+          marcaItems.forEach((el, i) => {
+            const rect = el.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const dx = mouseX - cx;
+            const dy = mouseY - cy;
+            const dist = Math.hypot(dx, dy) || 1;
+
+            let targetX, targetY;
+            if (el === closest) {
+              targetX = dx * ATTRACT;
+              targetY = dy * ATTRACT;
+            } else {
+              const nx = -dx / dist;
+              const ny = -dy / dist;
+              const repel = (REPEL_RADIUS - Math.min(dist, REPEL_RADIUS)) * REPEL_BASE * repelMultiplier;
+              targetX = nx * repel;
+              targetY = ny * repel;
+            }
+
+            current[i].x += (targetX - current[i].x) * LERP;
+            current[i].y += (targetY - current[i].y) * LERP;
+            el.style.transform = `translate(calc(-50% + ${current[i].x}px), calc(-50% + ${current[i].y}px))`;
+          });
+        }
+        rafId = null;
+        if (animating) rafId = requestAnimationFrame(updateMarcas);
+      }
+
+      function loop() {
+        updateMarcas();
+      }
+
+      const hoverRoot = marcasSection || marcasLogos;
+
+      hoverRoot.addEventListener('mousemove', (e) => {
+        if (document.body.classList.contains('modo-quiet')) return;
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (!rafId) {
+          animating = true;
+          rafId = requestAnimationFrame(loop);
+        }
+      });
+
+      hoverRoot.addEventListener('mouseleave', (e) => {
+        if (!hoverRoot.contains(e.relatedTarget)) {
+          mouseX = -9999;
+          mouseY = -9999;
+          if (!rafId) {
+            animating = true;
+            rafId = requestAnimationFrame(loop);
+          }
+        }
+      });
+
+    }
+    }
+  }
+
+  // --- Lightbox: imágenes y videos ---
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxVideo = document.getElementById('lightboxVideo');
   const lightboxClose = document.getElementById('lightboxClose');
+
+  function openLightbox(src, isVideo) {
+    if (!lightbox) return;
+    if (isVideo && lightboxVideo) {
+      lightbox.classList.add('is-video');
+      lightboxVideo.src = src;
+      lightboxVideo.muted = false;
+      lightboxVideo.play().catch(() => {});
+      lightbox.setAttribute('aria-label', 'Reproducir video');
+    } else if (lightboxImg) {
+      lightbox.classList.remove('is-video');
+      lightboxImg.src = src;
+      lightboxImg.alt = 'Imagen ampliada';
+      if (lightboxVideo) {
+        lightboxVideo.pause();
+        lightboxVideo.src = '';
+      }
+      lightbox.setAttribute('aria-label', 'Ampliar imagen');
+    }
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    if (lightbox) {
+      lightbox.classList.remove('is-open', 'is-video');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lightboxImg) lightboxImg.src = '';
+      if (lightboxVideo) {
+        lightboxVideo.pause();
+        lightboxVideo.src = '';
+      }
+    }
+  }
 
   document.querySelectorAll('[data-lightbox]').forEach((el) => {
     el.addEventListener('click', (e) => {
       e.preventDefault();
       const src = el.getAttribute('data-lightbox');
-      const img = el.querySelector('img');
-      if (lightbox && lightboxImg && src) {
-        lightboxImg.src = src;
-        lightboxImg.alt = img ? img.alt : 'Imagen ampliada';
-        lightbox.classList.add('is-open');
-        lightbox.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-      }
+      if (src) openLightbox(src, false);
     });
   });
 
-  function closeLightbox() {
-    if (lightbox) {
-      lightbox.classList.remove('is-open');
-      lightbox.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
+  document.querySelectorAll('.gallery-item[data-src]').forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const src = el.getAttribute('data-src');
+      const isVideo = el.getAttribute('data-media') === 'video';
+      if (src) openLightbox(src, isVideo);
+    });
+  });
+
+  // --- Galería socio: 4 slots rotando a destiempo + videos autoplay ---
+  const socioGallery = document.getElementById('socioGallery');
+  if (socioGallery && socioGallery.classList.contains('socio-gallery-rotating') && !prefersReducedMotion) {
+    const pool = [
+      { type: 'img', src: 'assets/images/viaje/PHOTO-2026-03-08-08-29-48.jpg' },
+      { type: 'video', src: 'assets/images/viaje/VIDEO-2026-03-08-08-05-59.mp4', poster: 'assets/images/viaje/PHOTO-2026-03-08-08-29-48.jpg' },
+      { type: 'img', src: 'assets/images/viaje/PHOTO-2026-03-08-07-53-11.jpg' },
+      { type: 'video', src: 'assets/images/viaje/VIDEO-2026-03-08-15-58-10.mp4', poster: 'assets/images/viaje/PHOTO-2026-03-08-14-12-04.jpg' },
+      { type: 'img', src: 'assets/images/viaje/PHOTO-2026-03-08-08-10-24.jpg' },
+      { type: 'img', src: 'assets/images/viaje/PHOTO-2026-03-08-07-49-12.jpg' },
+      { type: 'video', src: 'assets/images/viaje/VIDEO-2026-03-08-13-53-41.mp4', poster: 'assets/images/viaje/PHOTO-2026-03-08-14-11-42.jpg' },
+      { type: 'img', src: 'assets/images/viaje/PHOTO-2026-03-08-14-12-14.jpg' }
+    ];
+    const slots = socioGallery.querySelectorAll('.gallery-slot');
+    const slotIndex = [0, 1, 2, 3];
+    const intervals = [5200, 6100, 5800, 6400];
+    const delays = [0, 1200, 2500, 800];
+
+    function renderSlot(slotEl, item) {
+      slotEl.innerHTML = '';
+      slotEl.removeAttribute('data-src');
+      slotEl.removeAttribute('data-media');
+      if (item.type === 'img') {
+        slotEl.setAttribute('data-src', item.src);
+        slotEl.setAttribute('data-media', 'img');
+        const img = document.createElement('img');
+        img.src = item.src;
+        img.alt = 'Viaje Gran Barón';
+        img.loading = 'lazy';
+        slotEl.appendChild(img);
+      } else {
+        slotEl.setAttribute('data-src', item.src);
+        slotEl.setAttribute('data-media', 'video');
+        const video = document.createElement('video');
+        video.src = item.src;
+        video.muted = true;
+        video.playsInline = true;
+        video.loop = true;
+        video.autoplay = true;
+        if (item.poster) video.poster = item.poster;
+        video.preload = 'auto';
+        const play = document.createElement('span');
+        play.className = 'gallery-play';
+        play.setAttribute('aria-hidden', 'true');
+        play.textContent = '▶';
+        slotEl.appendChild(video);
+        slotEl.appendChild(play);
+        video.play().catch(() => {});
+      }
+    }
+
+    function rotateSlot(i) {
+      const used = new Set();
+      for (let j = 0; j < slots.length; j++) {
+        if (j !== i) used.add(slotIndex[j]);
+      }
+      let next = slotIndex[i];
+      const start = next;
+      do {
+        next = (next + 1) % pool.length;
+        if (!used.has(next)) break;
+      } while (next !== start);
+      slotIndex[i] = next;
+      renderSlot(slots[i], pool[slotIndex[i]]);
+    }
+
+    slots.forEach((slot, i) => {
+      renderSlot(slot, pool[slotIndex[i]]);
+      setTimeout(() => {
+        setInterval(() => rotateSlot(i), intervals[i]);
+      }, delays[i]);
+    });
+
+    socioGallery.addEventListener('click', (e) => {
+      const item = e.target.closest('.gallery-slot');
+      if (!item) return;
+      const src = item.getAttribute('data-src');
+      const isVideo = item.getAttribute('data-media') === 'video';
+      if (src) {
+        e.preventDefault();
+        openLightbox(src, isVideo);
+      }
+    });
+
+    // --- Flotación con rebote: imágenes se mueven lentamente y rebotan al chocarse (solo desktop) ---
+    const mqFloat = window.matchMedia('(min-width: 769px)');
+    if (!document.body.classList.contains('modo-quiet') && mqFloat.matches) {
+      const socioLayout = socioGallery.closest('.socio-layout');
+      const socioText = socioLayout?.querySelector('.socio-text');
+      const floatSlots = Array.from(socioGallery.querySelectorAll('.gallery-slot'));
+      const PAD = 15;
+
+      if (socioLayout && socioText && floatSlots.length === 4) {
+        socioGallery.classList.add('socio-float-js');
+        const state = floatSlots.map((_, i) => ({
+          x: 0,
+          y: 0,
+          vx: (i % 2 === 0 ? 1 : -1) * (0.045 + (i * 0.01)),
+          vy: (i < 2 ? 1 : -1) * (0.038 + (i * 0.008))
+        }));
+
+        function rectsOverlap(a, b) {
+          return !(a.right < b.left + PAD || a.left > b.right - PAD || a.bottom < b.top + PAD || a.top > b.bottom - PAD);
+        }
+
+        function tick() {
+          const layoutRect = socioLayout.getBoundingClientRect();
+          const textRect = socioText.getBoundingClientRect();
+          const textZone = {
+            left: textRect.left - 30,
+            right: textRect.right + 30,
+            top: textRect.top - 30,
+            bottom: textRect.bottom + 30
+          };
+
+          floatSlots.forEach((_, i) => {
+            state[i].x += state[i].vx;
+            state[i].y += state[i].vy;
+          });
+          const t = performance.now() * 0.001;
+          floatSlots.forEach((el, i) => {
+            const pulse = 1 + 0.035 * Math.sin(t + i * 1.5);
+            el.style.setProperty('--float-x', state[i].x + 'px');
+            el.style.setProperty('--float-y', state[i].y + 'px');
+            el.style.setProperty('--float-scale', String(pulse));
+          });
+          const rects = floatSlots.map((el) => el.getBoundingClientRect());
+
+          for (let i = 0; i < 4; i++) {
+            const r = rects[i];
+            if (rectsOverlap(r, textZone)) {
+              state[i].vx *= -1;
+              state[i].vy *= -1;
+              state[i].x += state[i].vx * 4;
+              state[i].y += state[i].vy * 4;
+            }
+            if (r.left < layoutRect.left + PAD || r.right > layoutRect.right - PAD) state[i].vx *= -1;
+            if (r.top < layoutRect.top + PAD || r.bottom > layoutRect.bottom - PAD) state[i].vy *= -1;
+            for (let j = i + 1; j < 4; j++) {
+              if (rectsOverlap(rects[i], rects[j])) {
+                state[i].vx *= -1;
+                state[i].vy *= -1;
+                state[j].vx *= -1;
+                state[j].vy *= -1;
+                state[i].x += state[i].vx * 5;
+                state[i].y += state[i].vy * 5;
+                state[j].x += state[j].vx * 5;
+                state[j].y += state[j].vy * 5;
+              }
+            }
+          }
+          floatSlots.forEach((el, i) => {
+            const pulse = 1 + 0.035 * Math.sin(t + i * 1.5);
+            el.style.setProperty('--float-x', state[i].x + 'px');
+            el.style.setProperty('--float-y', state[i].y + 'px');
+            el.style.setProperty('--float-scale', String(pulse));
+          });
+        }
+
+        let rafId = null;
+        let visible = true;
+        const io = new IntersectionObserver((entries) => {
+          visible = entries[0].isIntersecting;
+        }, { threshold: 0.1 });
+        io.observe(socioLayout);
+
+        function loop() {
+          if (visible && mqFloat.matches && !document.body.classList.contains('modo-quiet')) tick();
+          rafId = requestAnimationFrame(loop);
+        }
+        rafId = requestAnimationFrame(loop);
+      }
     }
   }
 
@@ -369,34 +789,6 @@
       localStorage.setItem('granbaron-modo-quiet', isQuiet);
     });
   }
-
-  // --- Swipe navegación móvil ---
-  const sections = ['#inicio', '#propuesta', '#materia', '#faq', '#contacto'];
-  let touchStartY = 0;
-  let touchEndY = 0;
-
-  document.addEventListener('touchstart', (e) => {
-    touchStartY = e.changedTouches[0].screenY;
-  }, { passive: true });
-
-  document.addEventListener('touchend', (e) => {
-    touchEndY = e.changedTouches[0].screenY;
-    const diff = touchStartY - touchEndY;
-    if (Math.abs(diff) < 80 || !isTouch) return;
-
-    const current = sections.findIndex((id) => {
-      const el = document.querySelector(id);
-      if (!el) return false;
-      const rect = el.getBoundingClientRect();
-      return rect.top >= -100 && rect.top <= 100;
-    });
-
-    if (diff > 0 && current < sections.length - 1) {
-      document.querySelector(sections[current + 1])?.scrollIntoView({ behavior: 'smooth' });
-    } else if (diff < 0 && current > 0) {
-      document.querySelector(sections[current - 1])?.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, { passive: true });
 
   // --- Botón volver arriba ---
   const backTop = document.getElementById('backTop');
